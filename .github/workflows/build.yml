@@ -1,0 +1,50 @@
+name: Build Skin Painter Mod
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch:   # Bisa dijalankan manual dari tab Actions
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: ${{ runner.os }}-gradle-
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Upload JAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: skinpainter-mod-jar
+          path: build/libs/skinpainter-*.jar
+          if-no-files-found: error
+
+      - name: Show build result
+        run: |
+          echo "=============================="
+          echo " BUILD SUKSES!"
+          echo " Download dari tab Actions ↑"
+          echo "=============================="
+          ls -lh build/libs/*.jar

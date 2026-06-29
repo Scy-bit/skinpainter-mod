@@ -1,1 +1,0 @@
-# skinpainter-mod

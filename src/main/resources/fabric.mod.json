@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "skinpainter",
+  "version": "${version}",
+  "name": "Skin Painter",
+  "description": "Cat skin Minecraft kamu secara real-time! Color wheel, Eraser, Undo/Redo, sync server.",
+  "authors": ["SkinPainter"],
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main":   ["com.skinpainter.SkinPainterMod"],
+    "client": ["com.skinpainter.client.SkinPainterClient"]
+  },
+  "mixins": ["skinpainter.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.14.22",
+    "fabric-api": "*",
+    "minecraft": "~1.20.1"
+  }
+}
